@@ -91,13 +91,7 @@ class ScoreResource extends Resource
                 DeleteAction::make(),
             ])
             ->headerActions([
-                Action::make('imprimir_img5')
-                    ->label('Acta 5')
-                    ->color('success')
-                    ->url(fn() => route('report.grade.print',['id'=>5]))
-                    ->openUrlInNewTab()
-                    ->icon('heroicon-o-printer'),
-                //6,7,8,9,10
+
                 Action::make('imprimir_img6')
                     ->label('Acta 6')
                     ->color('success')

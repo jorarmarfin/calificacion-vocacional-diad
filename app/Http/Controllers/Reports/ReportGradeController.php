@@ -28,8 +28,8 @@ class ReportGradeController extends Controller
         $k = 0;
         $num = 1;
         $question = str_pad($question_id,2,'0',0);
-        $professor = Professor::where('question',$question_id)->first();
-        $exams = Score::where('question',$question)->orderBy('question','asc')->get();
+        $professor = Professor::where('question',$question)->first();
+        $exams = Score::where('question',$question)->orderBy('voca','asc')->get();
         $this->tituloColumnas($question);
 
         foreach ($exams as $key => $exam) {
@@ -61,7 +61,7 @@ class ReportGradeController extends Controller
             $num++;
         }
         PDF::SetFont('helvetica', 'I', 9);
-        $this->box(30,270,70,5,$professor->names,'T','C');
+        $this->box(30,270,70,5,$professor->names ?? '','T','C');
 
         $fecha = date('Ymd_His');
         PDF::Output(storage_path('app/reportes/').'Acta_Calificacion_'.$fecha.'.pdf','I');

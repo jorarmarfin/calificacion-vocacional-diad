@@ -87,18 +87,18 @@ class ScorePage extends Page implements HasTable, HasForms
                 ->openUrlInNewTab()
                 ->icon('heroicon-o-printer'),
 
-            Action::make('deleteAll')
-                ->label('Eliminar Todos')
-                ->color('danger')
-                ->icon('heroicon-o-trash')
-                ->requiresConfirmation()
-                ->action(function () {
-                    Score::truncate();
-                    Notification::make()
-                        ->title('Todos los puntajes han sido eliminados')
-                        ->success()
-                        ->send();
-                }),
+//            Action::make('deleteAll')
+//                ->label('Eliminar Todos')
+//                ->color('danger')
+//                ->icon('heroicon-o-trash')
+//                ->requiresConfirmation()
+//                ->action(function () {
+//                    Score::truncate();
+//                    Notification::make()
+//                        ->title('Todos los puntajes han sido eliminados')
+//                        ->success()
+//                        ->send();
+//                }),
         ];
     }
 }
