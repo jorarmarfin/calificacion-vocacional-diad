@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class ScoreResource extends Resource
@@ -72,7 +73,17 @@ class ScoreResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('question')
+                    ->label('Pregunta')
+                    ->options([
+                        '05' => '05',
+                        '06' => '06',
+                        '07' => '07',
+                        '08' => '08',
+                        '09' => '09',
+                        '10' => '10',
+                    ]),
+
             ])
             ->recordActions([
                 EditAction::make(),
@@ -91,4 +102,7 @@ class ScoreResource extends Resource
             'index' => ManageScores::route('/'),
         ];
     }
+
+
+
 }
