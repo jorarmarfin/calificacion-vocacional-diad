@@ -2,6 +2,7 @@
 
 namespace App\Filament\Grading\Pages\Tables;
 
+use App\Models\Professor;
 use App\Models\Score;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
@@ -25,7 +26,8 @@ class ScoreTable
     }
     private static function getQuery(): Builder
     {
-        return Score::query()->orderByDesc('id');
+        $profesor = Professor::where('user_id',auth()->id())->first();
+        return Score::query()->where('question',$profesor->question)->orderByDesc('id');
     }
     public static function getColumns(): array
     {

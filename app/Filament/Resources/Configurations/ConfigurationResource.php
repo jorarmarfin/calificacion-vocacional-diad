@@ -49,6 +49,8 @@ class ConfigurationResource extends Resource
                     ->searchable(),
                 TextColumn::make('names')
                     ->searchable(),
+                TextColumn::make('value')
+                    ->searchable(),
             ])
             ->filters([
                 //
