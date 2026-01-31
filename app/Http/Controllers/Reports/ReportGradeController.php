@@ -61,7 +61,7 @@ class ReportGradeController extends Controller
             $num++;
         }
         PDF::SetFont('helvetica', 'I', 9);
-        $this->box(30,150,70,5,$professor->names,'T','C');
+        $this->box(30,270,70,5,$professor->names,'T','C');
 
         $fecha = date('Ymd_His');
         PDF::Output(storage_path('app/reportes/').'Acta_Calificacion_'.$fecha.'.pdf','I');

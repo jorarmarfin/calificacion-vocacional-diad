@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Scores;
 use App\Filament\Resources\Scores\Pages\ManageScores;
 use App\Models\Score;
 use BackedEnum;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -88,6 +89,45 @@ class ScoreResource extends Resource
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
+            ])
+            ->headerActions([
+                Action::make('imprimir_img5')
+                    ->label('Acta 5')
+                    ->color('success')
+                    ->url(fn() => route('report.grade.print',['id'=>5]))
+                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-printer'),
+                //6,7,8,9,10
+                Action::make('imprimir_img6')
+                    ->label('Acta 6')
+                    ->color('success')
+                    ->url(fn() => route('report.grade.print',['id'=>6]))
+                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-printer'),
+                Action::make('imprimir_img7')
+                    ->label('Acta 7')
+                    ->color('success')
+                    ->url(fn() => route('report.grade.print',['id'=>7]))
+                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-printer'),
+                Action::make('imprimir_img8')
+                    ->label('Acta 8')
+                    ->color('success')
+                    ->url(fn() => route('report.grade.print',['id'=>8]))
+                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-printer'),
+                Action::make('imprimir_img9')
+                    ->label('Acta 9')
+                    ->color('success')
+                    ->url(fn() => route('report.grade.print',['id'=>9]))
+                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-printer'),
+                Action::make('imprimir_img10')
+                    ->label('Acta 10')
+                    ->color('success')
+                    ->url(fn() => route('report.grade.print',['id'=>10]))
+                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-printer'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

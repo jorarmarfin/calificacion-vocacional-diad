@@ -33,8 +33,8 @@ class ScoreTable
             TextColumn::make('id'),
             TextColumn::make('voca')->label('Voca')->sortable()->searchable(),
             TextColumn::make('question')->label('Pregunta')->sortable()->searchable(),
-            TextColumn::make('data')->label('Datos')->sortable()->searchable(),
             TextColumn::make('note')->label('Nota')->sortable()->searchable(),
+            TextColumn::make('data')->label('Datos')->toggleable(isToggledHiddenByDefault:true),
             TextColumn::make('created_at')->label('Creado')->dateTime()->toggleable(isToggledHiddenByDefault: true)->searchable(),
             TextColumn::make('updated_at')->label('Actualizado')->dateTime()->toggleable(isToggledHiddenByDefault: true)->searchable(),
         ];
