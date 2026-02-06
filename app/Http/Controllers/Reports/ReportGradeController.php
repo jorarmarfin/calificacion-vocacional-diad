@@ -20,7 +20,7 @@ class ReportGradeController extends Controller
         $this->footer();
         PDF::SetLineWidth(0.1);
 
-        $altodecelda=5;
+        $alto_celda=5;
         $incremento = 45;
         $numMaxLineas = 90;
         $x = 35;
@@ -28,7 +28,7 @@ class ReportGradeController extends Controller
         $k = 0;
         $num = 1;
         $question = str_pad($question_id,2,'0',0);
-        $professor = Professor::where('question',$question)->first();
+        $professor = Professor::where('question','like','%'.$question.'%')->first();
         $exams = Score::where('question',$question)->orderBy('voca','asc')->get();
         $this->tituloColumnas($question);
 
@@ -51,9 +51,9 @@ class ReportGradeController extends Controller
             }
             PDF::SetFont('helvetica', '', 10);
             #NRO
-            $this->box($x,$j*$altodecelda+$incremento,10,5,$num,1,'C');
-            $this->box($x+10,$j*$altodecelda+$incremento,20,5,$exam->voca,1,'C');
-            $this->box($x+30,$j*$altodecelda+$incremento,25,5,$exam->note,1,'R');
+            $this->box($x,$j*$alto_celda+$incremento,10,5,$num,1,'C');
+            $this->box($x+10,$j*$alto_celda+$incremento,20,5,$exam->voca,1,'C');
+            $this->box($x+30,$j*$alto_celda+$incremento,25,5,$exam->note,1,'R');
 
 
             $j++;

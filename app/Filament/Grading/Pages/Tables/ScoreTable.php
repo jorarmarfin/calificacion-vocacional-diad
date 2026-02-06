@@ -14,20 +14,19 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ScoreTable
 {
-    public static function configure(Table $table): Table
+    public static function configure(Table $table,$pregunta): Table
     {
         return $table
-            ->query(self::getQuery())
+            ->query(self::getQuery($pregunta))
             ->columns(self::getColumns())
             ->filters(self::getFilters())
             ->recordActions(self::getRecordActions())
             ->toolbarActions(self::getToolbarActions())
             ->paginated([100, 150, 200, 250, 'all']);
     }
-    private static function getQuery(): Builder
+    private static function getQuery($pregunta): Builder
     {
-        $profesor = Professor::where('user_id',auth()->id())->first();
-        return Score::query()->where('question',$profesor->question)->orderByDesc('id');
+        return Score::query()->where('question',str_pad($pregunta,2,0,STR_PAD_LEFT))->orderByDesc('id');
     }
     public static function getColumns(): array
     {

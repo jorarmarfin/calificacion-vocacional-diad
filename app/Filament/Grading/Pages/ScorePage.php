@@ -17,6 +17,8 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Str;
+
 class ScorePage extends Page implements HasTable, HasForms
 {
     use InteractsWithTable, InteractsWithForms;
@@ -24,16 +26,11 @@ class ScorePage extends Page implements HasTable, HasForms
     protected string $view = 'filament.grading.pages.score-page';
     protected static ?int $navigationSort = 2;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Calculator;
-    public Professor $professor;
+    public int $pregunta;
     //constructor
     public function __construct()
     {
-        $p = Professor::where('user_id',auth()->id())->first();
-        if($p){
-            $this->professor = $p;
-        }else{
-            abort(403, 'No tienes permiso para acceder a esta página.');
-        }
+        $this->pregunta = Str::of(auth()->user()->name)->after('Pregunta')->value;
     }
 
 
@@ -41,7 +38,7 @@ class ScorePage extends Page implements HasTable, HasForms
 
     public function getTitle(): string | Htmlable
     {
-        return 'Calificación de la pregunta '.$this->professor->question;
+        return 'Calificación de la pregunta '.$this->pregunta;
     }
 
 
@@ -75,7 +72,7 @@ class ScorePage extends Page implements HasTable, HasForms
 
     public function table(Table $table): Table
     {
-        return ScoreTable::configure($table);
+        return ScoreTable::configure($table,$this->pregunta);
     }
     protected function getHeaderActions(): array
     {
@@ -83,22 +80,22 @@ class ScorePage extends Page implements HasTable, HasForms
             Action::make('imprimir_img1')
                 ->label('Acta de Calificacion')
                 ->color('success')
-                ->url(fn() => route('report.grade.print',['id'=>$this->professor->question]))
+                ->url(fn() => route('report.grade.print',['id'=>$this->pregunta]))
                 ->openUrlInNewTab()
                 ->icon('heroicon-o-printer'),
 
-//            Action::make('deleteAll')
-//                ->label('Eliminar Todos')
-//                ->color('danger')
-//                ->icon('heroicon-o-trash')
-//                ->requiresConfirmation()
-//                ->action(function () {
-//                    Score::truncate();
-//                    Notification::make()
-//                        ->title('Todos los puntajes han sido eliminados')
-//                        ->success()
-//                        ->send();
-//                }),
+            Action::make('deleteAll')
+                ->label('Eliminar Todos')
+                ->color('danger')
+                ->icon('heroicon-o-trash')
+                ->requiresConfirmation()
+                ->action(function () {
+                    Score::where('user_id', auth()->id())->delete();
+                    Notification::make()
+                        ->title('Todos los puntajes han sido eliminados')
+                        ->success()
+                        ->send();
+                }),
         ];
     }
 }
