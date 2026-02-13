@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users');
-            $table->string('data',7);
+            $table->string('data',8);
             $table->string('voca',4);
             $table->string('question',2);
             $table->integer('note')->default(0);

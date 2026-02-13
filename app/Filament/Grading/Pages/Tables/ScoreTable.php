@@ -2,12 +2,7 @@
 
 namespace App\Filament\Grading\Pages\Tables;
 
-use App\Models\Professor;
 use App\Models\Score;
-use Filament\Actions\Action;
-use Filament\Actions\EditAction;
-use Filament\Forms\Components\TextInput;
-use Filament\Notifications\Notification;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;

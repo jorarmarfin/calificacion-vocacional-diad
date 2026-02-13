@@ -50,21 +50,23 @@ class ScorePage extends Page implements HasTable, HasForms
     public function submit(): void
     {
         $data = $this->form->getState();
-        $puntaje = substr($data['currentScore'],0,7);
+        $puntaje = substr($data['currentScore'],0,8);
+        $nota = 0;
         if($data['currentScore']){
             $question = Score::firstOrNew([
                 'voca'=>str_pad(substr($puntaje, 0, 3), 3, '0', STR_PAD_LEFT),
                 'question'=>substr($puntaje,3,2)
             ]);
+            $nota = substr($puntaje,5,3);
             $question->user_id = auth()->id();
             $question->data = $puntaje;
-            $question->note = substr($puntaje,5,2);
+            $question->note = $nota;
             $question->save();
         }
 
         // Notificación de éxito (opcional)
          Notification::make()
-             ->title('Puntaje guardado')
+             ->title('Puntaje guardado '.$nota)
              ->success()
              ->send();
         $this->form->fill(['currentScore' => '']);
