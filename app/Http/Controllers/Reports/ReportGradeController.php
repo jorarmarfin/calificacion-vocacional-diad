@@ -28,7 +28,6 @@ class ReportGradeController extends Controller
         $k = 0;
         $num = 1;
         $question = str_pad($question_id,2,'0',0);
-        $professor = Professor::where('active',true)->where('question','like','%'.$question.'%')->get();
 
         $exams = Score::where('question',$question)->orderBy('voca','asc')->get();
         $this->tituloColumnas($question);
@@ -61,9 +60,32 @@ class ReportGradeController extends Controller
             $k++;
             $num++;
         }
+        // Firmas dinámicas de profesores (hasta 4: 2 arriba y 2 abajo)
         PDF::SetFont('helvetica', 'I', 9);
-        $this->box(30,270,70,5,'VICTOR LUIS YAÑEZ ASPILCUETA','T','C');
-        $this->box(110,270,70,5,'GARCIA ALARCON WALTER ROBERTO','T','C');
+
+        // Obtener profesores activos de esta pregunta
+        $professors = Professor::where('active', true)
+            ->where('question', 'like', '%'.$question.'%')
+            ->limit(4)
+            ->get();
+
+        // Posiciones para las firmas
+        // Fila inferior (referencia actual): y=270
+        // Fila superior: y=260
+        $positions = [
+            ['x' => 30, 'y' => 240],  // Superior izquierda
+            ['x' => 110, 'y' => 240], // Superior derecha
+            ['x' => 30, 'y' => 270],  // Inferior izquierda
+            ['x' => 110, 'y' => 270]  // Inferior derecha
+        ];
+
+        foreach ($professors as $index => $prof) {
+            if ($index < 4) {
+                $fullName = strtoupper(trim($prof->names));
+                $pos = $positions[$index];
+                $this->box($pos['x'], $pos['y'], 70, 5, $fullName, 'T', 'C');
+            }
+        }
 
         $fecha = date('Ymd_His');
         PDF::Output(public_path('storage/reportes/').'Acta_Calificacion_'.$question.'_'.$fecha.'.pdf','FI');
