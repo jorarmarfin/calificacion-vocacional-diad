@@ -29,7 +29,7 @@ class ReportGradeController extends Controller
         $num = 1;
         $question = str_pad($question_id,2,'0',0);
 
-        $exams = Score::where('question',$question)->orderBy('voca','asc')->get();
+        $exams = Score::where('question',$question)->orderBy('voca')->get();
         $this->tituloColumnas($question);
 
         foreach ($exams as $key => $exam) {
@@ -73,7 +73,7 @@ class ReportGradeController extends Controller
         // Fila inferior (referencia actual): y=270
         // Fila superior: y=260
         $positions = [
-            ['x' => 30, 'y' => 240],  // Superior izquierda
+            ['x' => 100, 'y' => 240],  // Superior izquierda
             ['x' => 110, 'y' => 240], // Superior derecha
             ['x' => 30, 'y' => 270],  // Inferior izquierda
             ['x' => 110, 'y' => 270]  // Inferior derecha
@@ -83,7 +83,7 @@ class ReportGradeController extends Controller
             if ($index < 4) {
                 $fullName = strtoupper(trim($prof->names));
                 $pos = $positions[$index];
-                $this->box($pos['x'], $pos['y'], 70, 5, $fullName, 'T', 'C');
+                #$this->box($pos['x'], $pos['y'], 70, 5, $fullName, 'T', 'C');
             }
         }
 
